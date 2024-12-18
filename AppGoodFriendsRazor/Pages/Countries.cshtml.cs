@@ -9,6 +9,8 @@ namespace MyApp.Namespace
     {
         readonly IFriendsService _service;
 
+        #region test
+        
         //Sweden
         public int NrFriendsSweden {get; set;}
         public int NrCitiesSweden {get; set;}
@@ -24,11 +26,45 @@ namespace MyApp.Namespace
         //Finland
         public int NrFriendsFinland {get; set;}
         public int NrCitiesFinland {get; set;}
+
+        #endregion test
         
+        //countries
+        public List<GstUsrInfoFriendsDto> countries {get; set;} = new List<GstUsrInfoFriendsDto>();
+
         public async Task <IActionResult> OnGet()
         {
-            GstUsrInfoAllDto dbInfo = await _service.InfoAsync;
+            
+            var dbInfo = await _service.InfoAsync;
 
+            //countries
+            /*countries = dbInfo.Friends
+            .Select(f => f.Country)
+            .Where(Country => !string.IsNullOrEmpty(Country))
+            .Distinct()
+            .ToList();*/
+
+
+            countries = dbInfo.Friends
+            .GroupBy(f => f.Country)
+            .Select(g => new GstUsrInfoFriendsDto
+            {
+                Country = g.Key,
+                NrFriends = g.Sum(f => f.NrFriends),
+                City = g.Count().ToString()
+            })
+            .ToList();
+            
+
+
+
+
+
+            
+
+
+
+            #region test
             //Sweden
             NrFriendsSweden = dbInfo.Friends.Where(f => f.Country == "Sweden").Sum(f => f.NrFriends);
             NrCitiesSweden = dbInfo.Friends.Count(f => f.Country == "Sweden");
@@ -44,6 +80,7 @@ namespace MyApp.Namespace
             //Finland
             NrFriendsFinland = dbInfo.Friends.Where(f => f.Country == "Finland").Sum(f => f.NrFriends);
             NrCitiesFinland = dbInfo.Friends.Count(f => f.Country == "Finland");
+            #endregion test
 
             return Page();
         }

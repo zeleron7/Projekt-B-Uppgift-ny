@@ -5,21 +5,25 @@
 
 <div class="container px-4 py-4" id="friends-by-country">
     <h2 class="pb-2 border-bottom">Friends by country</h2>
-    <p>Click in on a country below to see what cities my friends are living in.</p>
+    <p>Click on a country below to see what cities my friends are living in.</p>
 
-    <div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
-        <a href="Cities" class="text-decoration-none">
-            <div class="col">
+    <div class="d-flex flex-wrap justify-content-start gap-4 py-5">
+        @foreach (var countries in Model.countries)
+        {
+            <a href="Cities" class="text-decoration-none col-12 col-md-3 col-lg-3 mb-4">
                 <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
                     style="background-image: url('./img/unsplash-photo-3.jpg');">
                     <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                        <h3 class="pt-1 mt-1 mb-4 display-6 lh-1 fw-bold">Sweden</h3>
-                        <p class="fs-5">@Model.NrFriendsSweden Friends in @Model.NrCitiesSweden cities</p>
+                        <h3 class="pt-1 mt-1 mb-4 display-6 lh-1 fw-bold">@countries.Country</h3>
+                        <p class="fs-5">@countries.NrFriends Friends in @countries.City cities</p>
                     </div>
                 </div>
-            </div>
-        </a>
-
+            </a>
+        }
+    </div>
+</div>
+    
+        <!--
         <a href="Cities" class="text-decoration-none">
             <div class="col">
                 <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
@@ -54,7 +58,7 @@
                     </div>
                 </div>
             </div>
-        </a>
+        </a>-->
 
         <!--<a href="#friends-in-a-country" class="text-decoration-none">
             <div class="col">
