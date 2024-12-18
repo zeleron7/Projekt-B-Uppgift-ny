@@ -31,19 +31,12 @@ namespace MyApp.Namespace
         
         //countries
         public List<GstUsrInfoFriendsDto> countries {get; set;} = new List<GstUsrInfoFriendsDto>();
+        //public List<GstUsrInfoAllDto> countries {get; set;} = new List<GstUsrInfoAllDto>();
 
         public async Task <IActionResult> OnGet()
         {
             
             var dbInfo = await _service.InfoAsync;
-
-            //countries
-            /*countries = dbInfo.Friends
-            .Select(f => f.Country)
-            .Where(Country => !string.IsNullOrEmpty(Country))
-            .Distinct()
-            .ToList();*/
-
 
             countries = dbInfo.Friends
             .GroupBy(f => f.Country)
@@ -54,16 +47,23 @@ namespace MyApp.Namespace
                 City = g.Count().ToString()
             })
             .ToList();
+
+            /*countries = dbInfo.Friends
+            .GroupBy(f => f.Country)
+            .Select(g => new GstUsrInfoAllDto
+            {
+                Db = null, // Or populate this if needed
+                Friends = g.Select(f => new GstUsrInfoFriendsDto
+                {
+                    Country = f.Country,
+                    NrFriends = f.NrFriends,
+                    City = f.City
+                }).ToList(),
+                Pets = null, // Or populate this if needed
+                Quotes = null // Or populate this if needed
+            })
+            .ToList();*/
             
-
-
-
-
-
-            
-
-
-
             #region test
             //Sweden
             NrFriendsSweden = dbInfo.Friends.Where(f => f.Country == "Sweden").Sum(f => f.NrFriends);

@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 using Models.DTO;
 using Services;
 
 namespace MyApp.Namespace
 {
-    public class Sweden : PageModel
+    public class Cities : PageModel
     {
         readonly IFriendsService _service;
 
+        #region test
         //Sweden
         #region Sweden
 
@@ -45,11 +47,43 @@ namespace MyApp.Namespace
         //Finland
         public int NrFriendsFinland {get; set;}
         public int NrPetsFinland {get; set;}
+        #endregion test
         
-        public async Task <IActionResult> OnGet()
-        {
-            GstUsrInfoAllDto dbInfo = await _service.InfoAsync;
+        //cities
+        //public List<GstUsrInfoPetsDto> cities {get; set;} = new List<GstUsrInfoPetsDto>();
 
+        public List<dynamic> CityInfos { get; set; } = new List<dynamic>();
+        public string SelectedCountry { get; set; }
+
+        public async Task <IActionResult> OnGet(string country)
+        {
+            var dbInfo = await _service.InfoAsync;
+
+            /*cities = dbInfo.Pets
+            .GroupBy(f => f.City)
+            .Select(g => new GstUsrInfoPetsDto
+            {
+                City = g.Key,
+                NrPets = g.Sum(f => f.NrPets),
+                Country = g.Count().ToString()
+            })
+            .ToList();*/
+
+            SelectedCountry = country;
+
+             CityInfos = (from friend in dbInfo.Friends
+                         join pet in dbInfo.Pets on friend.City equals pet.City into petGroup
+                         from pet in petGroup.DefaultIfEmpty()
+                         where friend.Country == country
+                         group new { friend, pet } by friend.City into cityGroup
+                         select new
+                         {
+                             City = cityGroup.Key,
+                             NrFriends = cityGroup.Sum(x => x.friend.NrFriends),
+                             NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0)
+                         }).ToList<dynamic>();
+            
+            #region test
             //Sweden
             NrFriendsStockholm = dbInfo.Friends.Where(f => f.Country == "Stockholm").Sum(f => f.NrFriends);
             NrPetsStockholm = dbInfo.Pets.Count(f => f.Country == "Stockholm");
@@ -65,11 +99,12 @@ namespace MyApp.Namespace
             //Finland
             NrFriendsFinland = dbInfo.Friends.Where(f => f.Country == "Finland").Sum(f => f.NrFriends);
             NrPetsFinland = dbInfo.Pets.Count(f => f.Country == "Finland");
+            #endregion test
 
             return Page();
         }
 
-        public Sweden (IFriendsService service)
+        public Cities (IFriendsService service)
         {
             _service = service;
         }
