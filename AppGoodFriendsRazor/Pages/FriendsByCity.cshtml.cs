@@ -1,3 +1,4 @@
+using DbModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.DTO;
@@ -19,8 +20,8 @@ namespace MyApp.Namespace
 
             var dbInfo = await _service.InfoAsync;
 
-            friends = dbInfo.Friends
-            .GroupBy(f => f.City)
+            /*friends = dbInfo.Friends
+            .GroupBy(f => f.Country)
             .Select(g => new GstUsrInfoFriendsDto
             {
                 Country = g.Key,
@@ -28,7 +29,9 @@ namespace MyApp.Namespace
                 City = g.Where(a => a.City != null).Count().ToString()
             })
             .Where(a => a.Country != null)
-            .ToList();
+            .ToList();*/
+
+            
 
             return Page();
         }

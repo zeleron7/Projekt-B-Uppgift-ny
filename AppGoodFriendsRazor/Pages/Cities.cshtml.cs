@@ -80,7 +80,7 @@ namespace MyApp.Namespace
                          {
                              City = cityGroup.Key,
                              NrFriends = cityGroup.Sum(x => x.friend.NrFriends),
-                             NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0)
+                             NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0),
                          })
                          .Where(a => a.City != null)
                          .ToList<dynamic>();
