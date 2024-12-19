@@ -5,22 +5,22 @@ using Services;
 
 namespace MyApp.Namespace
 {
-    public class Countries : PageModel
+    public class FriendsByCity : PageModel
     {
         readonly IFriendsService _service;
 
-        //countries
-        public List<GstUsrInfoFriendsDto> countries {get; set;} = new List<GstUsrInfoFriendsDto>();
+        //friends
+        public List<GstUsrInfoFriendsDto> friends {get; set;} = new List<GstUsrInfoFriendsDto>();
+        public string SelectedCity { get; set; }
 
-        //public List<string> countries {get; set;} = new List<string>();
-
-        public async Task <IActionResult> OnGet()
+        public async Task <IActionResult> OnGet(string city)
         {
-            
+            SelectedCity = city;
+
             var dbInfo = await _service.InfoAsync;
 
-            countries = dbInfo.Friends
-            .GroupBy(f => f.Country)
+            friends = dbInfo.Friends
+            .GroupBy(f => f.City)
             .Select(g => new GstUsrInfoFriendsDto
             {
                 Country = g.Key,
@@ -33,7 +33,7 @@ namespace MyApp.Namespace
             return Page();
         }
 
-        public Countries (IFriendsService service)
+        public FriendsByCity (IFriendsService service)
         {
             _service = service;
         }
