@@ -81,26 +81,10 @@ namespace MyApp.Namespace
                              City = cityGroup.Key,
                              NrFriends = cityGroup.Sum(x => x.friend.NrFriends),
                              NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0)
-                         }).ToList<dynamic>();
+                         })
+                         .Where(a => a.City != null)
+                         .ToList<dynamic>();
             
-            #region test
-            //Sweden
-            NrFriendsStockholm = dbInfo.Friends.Where(f => f.Country == "Stockholm").Sum(f => f.NrFriends);
-            NrPetsStockholm = dbInfo.Pets.Count(f => f.Country == "Stockholm");
-
-            //Norway
-            NrFriendsNorway = dbInfo.Friends.Where(f => f.Country == "Norway").Sum(f => f.NrFriends);
-            NrPetsNorway = dbInfo.Pets.Count(f => f.Country == "Norway");
-
-            //Denmark
-            NrFriendsDenmark = dbInfo.Friends.Where(f => f.Country == "Denmark").Sum(f => f.NrFriends);
-            NrPetsDenmark = dbInfo.Pets.Count(f => f.Country == "Denmark");
-
-            //Finland
-            NrFriendsFinland = dbInfo.Friends.Where(f => f.Country == "Finland").Sum(f => f.NrFriends);
-            NrPetsFinland = dbInfo.Pets.Count(f => f.Country == "Finland");
-            #endregion test
-
             return Page();
         }
 

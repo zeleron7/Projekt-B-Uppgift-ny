@@ -50,25 +50,6 @@ namespace MyApp.Namespace
             .Where(a => a.Country != null)
             .ToList();
 
-           
-            #region test
-            //Sweden
-            NrFriendsSweden = dbInfo.Friends.Where(f => f.Country == "Sweden").Sum(f => f.NrFriends);
-            NrCitiesSweden = dbInfo.Friends.Count(f => f.Country == "Sweden");
-
-            //Norway
-            NrFriendsNorway = dbInfo.Friends.Where(f => f.Country == "Norway").Sum(f => f.NrFriends);
-            NrCitiesNorway = dbInfo.Friends.Count(f => f.Country == "Norway");
-
-            //Denmark
-            NrFriendsDenmark = dbInfo.Friends.Where(f => f.Country == "Denmark").Sum(f => f.NrFriends);
-            NrCitiesDenmark = dbInfo.Friends.Count(f => f.Country == "Denmark");
-
-            //Finland
-            NrFriendsFinland = dbInfo.Friends.Where(f => f.Country == "Finland").Sum(f => f.NrFriends);
-            NrCitiesFinland = dbInfo.Friends.Count(f => f.Country == "Finland");
-            #endregion test
-
             return Page();
         }
 
