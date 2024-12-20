@@ -18,18 +18,26 @@ namespace MyApp.Namespace
         public string SelectedCity { get; set; }
 
         //pagination
-        public int CurrentPage { get; set; }
-        public int TotalPages { get; set; }
+        public int NrOfPages { get; set; }
+        public int PageSize { get; } = 10;
+
+        public int ThisPageNr { get; set; } = 0;
+        public int PrevPageNr { get; set; } = 0;
+        public int NextPageNr { get; set; } = 0;
+        public int PresentPages { get; set; } = 0;
 
 
-        public async Task <IActionResult> OnGet(string city, int pageNumber = 1)
+        public async Task <IActionResult> OnGet(string city, string pagenr)
         {
             SelectedCity = city;
 
-            CurrentPage = pageNumber;
-            int pageSize = 10;
-
-            //var dbInfo = await _service.InfoAsync;
+            //read a queryparameter
+            /*if (int.TryParse(pagenr, out int _pagenr))
+            {
+                ThisPageNr = _pagenr;
+            }*/
+            
+            //Friends = _service.ReadAddressesAsync(true, false, SelectedCity, ThisPageNr, PageSize).Result.PageItems.SelectMany(a => a.Friends).ToList();
 
             var result = await _service.ReadAddressesAsync(true, false, SelectedCity, 0, 100);
             Friends = result.PageItems.SelectMany(a => a.Friends).ToList();
