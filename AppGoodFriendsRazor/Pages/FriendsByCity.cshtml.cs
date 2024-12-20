@@ -1,6 +1,7 @@
 using DbModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 using Models.DTO;
 using Services;
 
@@ -11,7 +12,8 @@ namespace MyApp.Namespace
         readonly IFriendsService _service;
 
         //friends
-        public List<GstUsrInfoFriendsDto> friends {get; set;} = new List<GstUsrInfoFriendsDto>();
+        public List<IFriend> Friends {get; set;}
+        
         public string SelectedCity { get; set; }
 
         public async Task <IActionResult> OnGet(string city)
@@ -20,17 +22,16 @@ namespace MyApp.Namespace
 
             var dbInfo = await _service.InfoAsync;
 
-            /*friends = dbInfo.Friends
-            .GroupBy(f => f.Country)
-            .Select(g => new GstUsrInfoFriendsDto
-            {
-                Country = g.Key,
-                NrFriends = g.Sum(f => f.NrFriends),
-                City = g.Where(a => a.City != null).Count().ToString()
-            })
-            .Where(a => a.Country != null)
-            .ToList();*/
+            var result = await _service.ReadFriendsAsync(true, false, city, 0, 100);
+            Friends = result.PageItems.ToList();
 
+
+            /*var friends = result.PageItems.Select(f => new 
+            {
+                f.FirstName,
+                f.LastName,
+            })
+            .ToList();*/
             
 
             return Page();
