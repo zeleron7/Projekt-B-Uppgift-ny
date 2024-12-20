@@ -17,12 +17,18 @@
             </form>
         </div>
     </div>
+
+    <br>
+
     @foreach (var friend in Model.Friends)
-    {
-        <div class="row mb-2 text-center">
-            <div class="col-md-4 themed-grid-col">
-                <p>TDFFDSFSDF</p>
+    {  
+        <div class="row mb-1 text-center">
+            <div class="col-md-6 themed-grid-col">
+                @friend.FirstName @friend.LastName
+                <br>
+                @friend.Email
             </div>
+        
             <div class="col-md-2 themed-grid-col">
                 <a href="#view-friend" class="btn btn-primary btn-sm" type="button">View</a>
                 <a href="#add-edit-friend" class="btn btn-secondary btn-sm" type="button">Edit</a>
@@ -30,6 +36,7 @@
             </div>
         </div>
     }
+    
     <nav aria-label="Standard pagination example">
         <ul class="pagination">
             <li class="page-item">
@@ -55,5 +62,7 @@
         </ul>
     </nav>
 </div>
+
+
         
 

@@ -14,26 +14,26 @@ namespace MyApp.Namespace
         //friends
         public List<IFriend> Friends {get; set;}
         
+        //selected city
         public string SelectedCity { get; set; }
 
-        public async Task <IActionResult> OnGet(string city)
+        //pagination
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
+
+
+        public async Task <IActionResult> OnGet(string city, int pageNumber = 1)
         {
             SelectedCity = city;
 
-            var dbInfo = await _service.InfoAsync;
+            CurrentPage = pageNumber;
+            int pageSize = 10;
 
-            var result = await _service.ReadFriendsAsync(true, false, city, 0, 100);
-            Friends = result.PageItems.ToList();
+            //var dbInfo = await _service.InfoAsync;
 
-
-            /*var friends = result.PageItems.Select(f => new 
-            {
-                f.FirstName,
-                f.LastName,
-            })
-            .ToList();*/
+            var result = await _service.ReadAddressesAsync(true, false, SelectedCity, 0, 100);
+            Friends = result.PageItems.SelectMany(a => a.Friends).ToList();
             
-
             return Page();
         }
 
