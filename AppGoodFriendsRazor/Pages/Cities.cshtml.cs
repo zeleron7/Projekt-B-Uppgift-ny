@@ -6,68 +6,30 @@ using Services;
 
 namespace MyApp.Namespace
 {
+     public class CitiesInfo
+    {
+        public string City { get; set; }
+        public int NrFriends { get; set; }
+        public int NrPets { get; set; }
+    }
+
+
     public class Cities : PageModel
     {
         readonly IFriendsService _service;
+       
+        public string City { get; set; }
+        public int NrFriends { get; set; }
+        public int NrPets { get; set; }
+        public List<CitiesInfo> CitiesInfo { get; set; } = new List<CitiesInfo>();
 
-        #region test
-        //Sweden
-        #region Sweden
 
-        //Stockholm
-        public int NrFriendsStockholm {get; set;}
-        public int NrPetsStockholm {get; set;}
-
-        //Gothenburg
-        public int NrFriendsGothenburg {get; set;}
-        public int NrPetsGothenburg {get; set;}
-
-        //Malmo
-        public int NrFriendsMalmo {get; set;}
-        public int NrPetsMalmo {get; set;}
-
-        //Gavle
-        public int NrFriendsGavle {get; set;}
-        public int NrPetsGavle {get; set;}
-
-        //Akersberga
-        public int NrFriendsAkersberga {get; set;}
-        public int NrPetsAkersberga {get; set;}
-
-        #endregion Sweden
-
-        //Norway
-        public int NrFriendsNorway {get; set;}
-        public int NrPetsNorway {get; set;}
-
-        //Denmark
-        public int NrFriendsDenmark {get; set;}
-        public int NrPetsDenmark {get; set;}
-
-        //Finland
-        public int NrFriendsFinland {get; set;}
-        public int NrPetsFinland {get; set;}
-        #endregion test
-        
-        //cities
-        //public List<GstUsrInfoPetsDto> cities {get; set;} = new List<GstUsrInfoPetsDto>();
-
-        public List<dynamic> CityInfos { get; set; } = new List<dynamic>();
+        //public List<dynamic> CityInfos { get; set; } = new List<dynamic>();
         public string SelectedCountry { get; set; }
 
         public async Task <IActionResult> OnGet(string country)
         {
-            var dbInfo = await _service.InfoAsync;
-
-            /*cities = dbInfo.Pets
-            .GroupBy(f => f.City)
-            .Select(g => new GstUsrInfoPetsDto
-            {
-                City = g.Key,
-                NrPets = g.Sum(f => f.NrPets),
-                Country = g.Count().ToString()
-            })
-            .ToList();*/
+            /*var dbInfo = await _service.InfoAsync;
 
             SelectedCountry = country;
 
@@ -83,7 +45,29 @@ namespace MyApp.Namespace
                              NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0),
                          })
                          .Where(a => a.City != null)
-                         .ToList<dynamic>();
+                         .ToList<dynamic>();*/
+
+
+            var dbInfo = await _service.InfoAsync;
+
+            var friends = dbInfo.Friends
+                .Where(f => f.Country == country && f.City != null)
+                .ToList();
+
+            var pets = dbInfo.Pets
+                .Where(p => p.Country == country && p.City != null)
+                .ToList();
+
+            var cityGroups = friends.GroupBy(f => f.City)
+                .Select(g => new CitiesInfo
+                {
+                    City = g.Key,
+                    NrFriends = g.Sum(f => f.NrFriends),
+                    NrPets = pets.Where(p => p.City == g.Key).Sum(p => p.NrPets)
+                })
+                .ToList();
+
+            CitiesInfo.AddRange(cityGroups);
             
             return Page();
         }
