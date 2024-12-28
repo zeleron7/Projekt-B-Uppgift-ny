@@ -13,6 +13,8 @@ namespace MyApp.Namespace
 
         //friends
         public List<IFriend> Friends {get; set;}
+
+        public int NrFriends { get; set; }
         
         //selected city
         public string SelectedCity { get; set; }
@@ -24,25 +26,42 @@ namespace MyApp.Namespace
         public int ThisPageNr { get; set; } = 0;
         public int PrevPageNr { get; set; } = 0;
         public int NextPageNr { get; set; } = 0;
-        public int PresentPages { get; set; } = 0;
+        public int NrVisiblePages { get; set; } = 0;
+
+        //ModelBinding for the form
+        [BindProperty] 
+        public string SearchFilter { get; set; } = null;
 
 
-        public async Task <IActionResult> OnGet(string city, string pagenr)
+        public async Task <IActionResult> OnGet(string city)
         {
             SelectedCity = city;
+            //ThisPageNr = pagenr;
 
-            //read a queryparameter
-            /*if (int.TryParse(pagenr, out int _pagenr))
+            //Read a QueryParameters
+            if (int.TryParse(Request.Query["pagenr"], out int pagenr))
             {
-                ThisPageNr = _pagenr;
-            }*/
-            
-            //Friends = _service.ReadAddressesAsync(true, false, SelectedCity, ThisPageNr, PageSize).Result.PageItems.SelectMany(a => a.Friends).ToList();
+                ThisPageNr = pagenr;
+            }
 
-            var result = await _service.ReadAddressesAsync(true, false, SelectedCity, 0, 100);
+            SearchFilter = Request.Query["search"];
+            
+            var result = await _service.ReadAddressesAsync(true, false, SelectedCity, ThisPageNr, PageSize);
             Friends = result.PageItems.SelectMany(a => a.Friends).ToList();
+            NrFriends = result.DbItemsCount;
+
+            UpdatePagination(result.DbItemsCount);
             
             return Page();
+        }
+
+        private void UpdatePagination(int nrOfItems)
+        {
+            //Pagination
+            NrOfPages = (int)Math.Ceiling((double)nrOfItems / PageSize);
+            PrevPageNr = Math.Max(0, ThisPageNr - 1);
+            NextPageNr = Math.Min(NrOfPages - 1, ThisPageNr + 1);
+            NrVisiblePages = Math.Min(10, NrOfPages);
         }
 
         public FriendsByCity (IFriendsService service)

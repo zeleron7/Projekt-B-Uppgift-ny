@@ -37,7 +37,7 @@
         </div>
     }
     
-    <nav aria-label="Standard pagination example">
+    <!--<nav aria-label="Standard pagination example">
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" href="#list-of-friends" aria-label="Previous">
@@ -61,7 +61,29 @@
             </li>
         </ul>
     </nav>
-</div>
+</div>-->
+
+ <nav aria-label="Standard pagination example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/FriendsByCity?pagenr=@Model.PrevPageNr&search=@Model.SearchFilter" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    @for (int i = 0; i < Model.NrVisiblePages; i++)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="~/FriendsByCity?pagenr=@i&search=@Model.SearchFilter">@(i + 1)</a>
+                                        </li>
+
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/FriendsByCity?pagenr=@Model.NextPageNr&search=@Model.SearchFilter" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
 
 
         

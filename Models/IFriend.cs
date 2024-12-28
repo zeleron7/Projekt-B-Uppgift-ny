@@ -14,7 +14,7 @@ public interface IFriend
     public DateTime? Birthday { get; set; }
 
     public List<IPet> Pets { get; set; }
-    public List<IQuote> Quotes { get; set; }
+    public List<IQuote> Quotes { get; set; } 
 }
 
 
