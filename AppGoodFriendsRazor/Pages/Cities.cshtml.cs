@@ -29,6 +29,9 @@ namespace MyApp.Namespace
 
         public async Task <IActionResult> OnGet(string country)
         {
+
+        SelectedCountry = country;
+
             /*var dbInfo = await _service.InfoAsync;
 
             SelectedCountry = country;
@@ -46,7 +49,6 @@ namespace MyApp.Namespace
                          })
                          .Where(a => a.City != null)
                          .ToList<dynamic>();*/
-
 
             var dbInfo = await _service.InfoAsync;
 
