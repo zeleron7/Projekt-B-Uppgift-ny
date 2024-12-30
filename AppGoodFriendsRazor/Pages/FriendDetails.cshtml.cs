@@ -7,41 +7,48 @@ using Services;
 
 namespace MyApp.Namespace
 {
-    public class FriendInfo 
-    {
-        public Guid FriendId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-         public string Address { get; set; }
-        public string Birthday { get; set; }
-        public string Pets { get; set; }
-        public string Quotes { get; set; } 
-    }
-
+    
     public class FriendDetails : PageModel
     {
         readonly IFriendsService _service;
 
         //friends
-        public List<IFriend> Friends {get; set;}
+        public IFriend Friend { get; set; }
 
-        public string FriendId { get; set; }
+        //public Guid FriendId { get; set; }
 
-        public async Task <IActionResult> OnGet(string friendId)
+        public async Task <IActionResult> OnGet(Guid friendId, Guid petId, Guid quoteId)
         {
-            FriendId = friendId;
-
-             
-            var result = await _service.ReadFriendAsync(Guid.Parse(FriendId), false);
-            Friends = new List<IFriend> { result };
-
             
-
+            Friend = await _service.ReadFriendAsync(friendId, false);
+            var pets = await _service.ReadPetAsync(petId, false);
+            var quotes = await _service.ReadQuoteAsync(quoteId, false);
             
-            
+            Friend.Pets.Where(p => p.PetId == friendId);
+            Friend.Quotes.Where(q => q.QuoteId == friendId);
 
+            Friend.Pets.Add(pets);
+            Friend.Quotes.Add(quotes);
+            
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetDelete(Guid friendId, Guid petId, Guid quoteId)
+        {
+            if (petId != Guid.Empty)
+        {
+            await _service.DeletePetAsync(petId);
+        }
+        else
+        {
+            Console.WriteLine("test");
+        }
+
+        // Reload the friend details after deletion
+        Friend = await _service.ReadFriendAsync(friendId, false);
+        
+        return Page();
+            
         }
 
         public FriendDetails (IFriendsService service)
