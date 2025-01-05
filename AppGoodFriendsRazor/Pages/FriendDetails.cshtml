@@ -63,16 +63,19 @@
                 <a  href="#add-edit-pet" class="btn btn-success btn-sm" type="button">Add</a>
               </h3>
 
-              @foreach (var item in @Model.Friend.Pets)
+              @if (Model.Friend.Pets != null)
               {
-              <div class="row mb-2 text-center">
-                <div class="col-md-10 themed-grid-col">@item.Name the @item.Mood @item.Kind</div>
-                <div class="col-md-2 themed-grid-col">
-                    <a href="#add-edit-pet"  class="btn btn-secondary btn-sm" type="button">Edit</a>
-                    <a href="#" class="btn btn-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#hardModal" onclick="setDeleteId('@item.PetId', 'pet')" type="button">Delete</a>
-                </div>
-              </div>
-            }
+                @foreach (var item in Model.Friend.Pets)
+                {
+                    <div class="row mb-2 text-center">
+                        <div class="col-md-10 themed-grid-col">@item.Name the @item.Mood @item.Kind</div>
+                        <div class="col-md-2 themed-grid-col">
+                            <a href="#add-edit-pet" class="btn btn-secondary btn-sm" type="button">Edit</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hardModal" onclick="setDeleteId('@item.PetId', 'pet', '@Model.Friend.FriendId')" type="button">Delete</a>
+                        </div>
+                    </div>
+                }
+              }
             </div>
 
             <div class="col-md-7 col-lg-8">
@@ -80,27 +83,31 @@
                 <a href="#list-of-quotes" class="btn btn-success btn-sm" type="button">Add</a>
               </h3>
 
-              @foreach (var item in @Model.Friend.Quotes)
+              @if (Model.Friend.Quotes != null)
               {
-              <div class="row mb-2 text-center">
-                <div class="col-md-10 themed-grid-col">
-                  @item.QuoteText
-                  <div class="col-md-16  text-end">@item.Author</div>
-                </div>
-                <div class="col-md-2 themed-grid-col">
-                   <a href="#" class="btn btn-danger btn-sm"  data-bs-toggle="modal" onclick="setDeleteId('@item.QuoteId', 'quote')" data-bs-target="#hardModal" type="button">Delete</a>
-                </div>
-              </div>
+                @foreach (var item in Model.Friend.Quotes)
+                {
+                    <div class="row mb-2 text-center">
+                        <div class="col-md-10 themed-grid-col">
+                            @item.QuoteText
+                            <div class="col-md-16 text-end">@item.Author</div>
+                        </div>
+                        <div class="col-md-2 themed-grid-col">
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hardModal" onclick="setDeleteId('@item.QuoteId', 'quote', '@Model.Friend.FriendId')" type="button">Delete</a>
+                        </div>
+                    </div>
+                }
               }
             </div>
         </div>
       </div>
 
       <!-- Modal that DO NOT close if you click outside the modal or hot escape -->
-      <form method="=post" asp-page-handler="Delete">
+      <form id="deleteForm" method="post" asp-page-handler="Delete">
       <div class="modal fade" id="hardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="hardModalLabel" aria-hidden="true">
       <input type="hidden" id="deleteId" name="deleteId" value="" />
       <input type="hidden" id="deleteType" name="deleteType" value="" />
+      <input type="hidden" id="friendId" name="friendId" value="" />
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -112,7 +119,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-primary">Yes</button>
+              <button type="button" id="confirmDeleteButton" class="btn btn-primary">Yes</button>
             </div>
           </div>
         </div>
@@ -120,8 +127,13 @@
       </form>
 
 <script>
-    function setDeleteId(id, type) {
+    function setDeleteId(id, type, friendId) {
         document.getElementById('deleteId').value = id;
         document.getElementById('deleteType').value = type;
+        document.getElementById('friendId').value = friendId;
     }
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        document.getElementById('deleteForm').submit();
+    });
 </script>

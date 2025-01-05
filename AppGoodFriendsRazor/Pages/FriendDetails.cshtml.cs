@@ -12,14 +12,13 @@ namespace MyApp.Namespace
     {
         readonly IFriendsService _service;
 
-        //friends
+        //friends 
         public IFriend Friend { get; set; }
 
         //public Guid FriendId { get; set; }
 
         public async Task <IActionResult> OnGet(Guid friendId, Guid petId, Guid quoteId)
         {
-            
             Friend = await _service.ReadFriendAsync(friendId, false);
             var pets = await _service.ReadPetAsync(petId, false);
             var quotes = await _service.ReadQuoteAsync(quoteId, false);
@@ -33,7 +32,7 @@ namespace MyApp.Namespace
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDelete(Guid deleteId, string deleteType)
+        public async Task<IActionResult> OnPostDelete(Guid deleteId, string deleteType, Guid friendId)
         {
         if (deleteType == "pet" && deleteId != Guid.Empty)
         {
@@ -45,8 +44,10 @@ namespace MyApp.Namespace
         }
 
         // Reload the friend details after deletion
-        Friend = await _service.GetFriendAsync(Friend.FriendId);
-        return Page();
+        Friend = await _service.ReadFriendAsync(friendId, false);
+        return await OnGet(friendId, Guid.Empty, Guid.Empty);
+
+        //return Page();
         }
 
         public FriendDetails (IFriendsService service)
