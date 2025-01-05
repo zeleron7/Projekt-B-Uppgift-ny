@@ -33,22 +33,20 @@ namespace MyApp.Namespace
             return Page();
         }
 
-        public async Task<IActionResult> OnGetDelete(Guid friendId, Guid petId, Guid quoteId)
+        public async Task<IActionResult> OnPostDelete(Guid deleteId, string deleteType)
         {
-            if (petId != Guid.Empty)
+        if (deleteType == "pet" && deleteId != Guid.Empty)
         {
-            await _service.DeletePetAsync(petId);
+            await _service.DeletePetAsync(deleteId);
         }
-        else
+        else if (deleteType == "quote" && deleteId != Guid.Empty)
         {
-            Console.WriteLine("test");
+            await _service.DeleteQuoteAsync(deleteId);
         }
 
         // Reload the friend details after deletion
-        Friend = await _service.ReadFriendAsync(friendId, false);
-        
+        Friend = await _service.GetFriendAsync(Friend.FriendId);
         return Page();
-            
         }
 
         public FriendDetails (IFriendsService service)
