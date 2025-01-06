@@ -12,42 +12,35 @@ namespace MyApp.Namespace
     {
         readonly IFriendsService _service;
 
-        //friends 
+        //friend
         public IFriend Friend { get; set; }
 
-        //public Guid FriendId { get; set; }
-
-        public async Task <IActionResult> OnGet(Guid friendId, Guid petId, Guid quoteId)
+        public async Task <IActionResult> OnGet(Guid friendId)
         {
             Friend = await _service.ReadFriendAsync(friendId, false);
-            var pets = await _service.ReadPetAsync(petId, false);
-            var quotes = await _service.ReadQuoteAsync(quoteId, false);
-            
-            Friend.Pets.Where(p => p.PetId == friendId);
-            Friend.Quotes.Where(q => q.QuoteId == friendId);
-
-            Friend.Pets.Add(pets);
-            Friend.Quotes.Add(quotes);
             
             return Page();
         }
 
         public async Task<IActionResult> OnPostDelete(Guid deleteId, string deleteType, Guid friendId)
         {
-        if (deleteType == "pet" && deleteId != Guid.Empty)
-        {
-            await _service.DeletePetAsync(deleteId);
-        }
-        else if (deleteType == "quote" && deleteId != Guid.Empty)
-        {
-            await _service.DeleteQuoteAsync(deleteId);
-        }
+            if (deleteType == "pet" && deleteId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+            if(await _service.ReadPetAsync(deleteId, false) != null)
+            {
+                    await _service.DeletePetAsync(deleteId);
+            } 
+            }
 
-        // Reload the friend details after deletion
-        Friend = await _service.ReadFriendAsync(friendId, false);
-        return await OnGet(friendId, Guid.Empty, Guid.Empty);
+            if (deleteType == "quote" && deleteId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+                if(await _service.ReadQuoteAsync(deleteId, false) != null)
+                {
+                    await _service.DeleteQuoteAsync(deleteId);
+                }
+            }
 
-        //return Page();
+            return await OnGet(friendId);
         }
 
         public FriendDetails (IFriendsService service)

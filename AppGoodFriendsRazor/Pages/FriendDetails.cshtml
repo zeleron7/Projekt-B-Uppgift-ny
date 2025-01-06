@@ -54,7 +54,7 @@
                 </div>
                 </div>
 
-              <a href="#add-edit-friend" class="w-100 btn btn-primary btn-lg my-4">Edit friend details</a>
+              <a href="~/EditFriend?FriendId=@Model.Friend.FriendId" class="w-100 btn btn-primary btn-lg my-4">Edit friend details</a>
               </form>            
             </div>
             
@@ -77,6 +77,7 @@
                 }
               }
             </div>
+              
 
             <div class="col-md-7 col-lg-8">
               <h3 class="pb-2">My friend's favorite quotes
@@ -102,6 +103,7 @@
         </div>
       </div>
 
+      
       <!-- Modal that DO NOT close if you click outside the modal or hot escape -->
       <form id="deleteForm" method="post" asp-page-handler="Delete">
       <div class="modal fade" id="hardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="hardModalLabel" aria-hidden="true">
@@ -128,9 +130,10 @@
 
 <script>
     function setDeleteId(id, type, friendId) {
-        document.getElementById('deleteId').value = id;
-        document.getElementById('deleteType').value = type;
-        document.getElementById('friendId').value = friendId;
+
+      document.getElementById('deleteId').value = id;
+      document.getElementById('deleteType').value = type;
+      document.getElementById('friendId').value = friendId;
     }
 
     document.getElementById('confirmDeleteButton').addEventListener('click', function() {
