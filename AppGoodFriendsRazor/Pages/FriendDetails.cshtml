@@ -10,7 +10,7 @@
   
         <div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
             <div class="col-md-7 col-lg-8">
-              <form class="needs-validation" novalidate>
+              <form class="row g-3 needs-validation" novalidate>
                 <div class="row g-3">
                   <div class="col-sm-6">
                     <label for="firstName" class="form-label">First name</label>
@@ -26,6 +26,7 @@
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" value="@Model.Friend.Email" readonly>
                   </div>
+
                   <div class="col-sm-6">
                     <label for="birthday" class="form-label">Birthday</label>
                     <input type="birthday" class="form-control" id="birthday" value="@Model.Friend.Birthday" readonly>
@@ -60,10 +61,16 @@
             
             <div class="col-md-7 col-lg-8">
               <h3 class="pb-2">My friend's pets
-                <a  href="#add-edit-pet" class="btn btn-success btn-sm" type="button">Add</a>
+                <!--<a  href="#add-edit-pet" class="btn btn-success btn-sm" type="button">Add</a>-->
               </h3>
 
-              @if (Model.Friend.Pets != null)
+              @if (Model.Friend.Pets.Count == 0)
+              {
+                <div class="row mb-2 text-center">
+                <div class="col-md-10 themed-grid-col">This friend has zero pets</div>
+                </div>
+              }
+              else
               {
                 @foreach (var item in Model.Friend.Pets)
                 {
@@ -81,10 +88,16 @@
 
             <div class="col-md-7 col-lg-8">
               <h3 class="pb-2">My friend's favorite quotes
-                <a href="#list-of-quotes" class="btn btn-success btn-sm" type="button">Add</a>
+                <!--<a href="#list-of-quotes" class="btn btn-success btn-sm" type="button">Add</a>-->
               </h3>
 
-              @if (Model.Friend.Quotes != null)
+              @if (Model.Friend.Quotes.Count == 0)
+              {
+                <div class="row mb-2 text-center">
+                <div class="col-md-10 themed-grid-col">This friend has zero quotes</div>
+                </div>
+              }
+              else
               {
                 @foreach (var item in Model.Friend.Quotes)
                 {

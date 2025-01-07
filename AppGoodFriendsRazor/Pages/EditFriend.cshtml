@@ -11,41 +11,60 @@
             <div class="col-md-7 col-lg-8">
               <form method="post" asp-page-handler="Edit" class="needs-validation" novalidate>
                 <input type="hidden" name="friendId" value="@Model.Friend.FriendId" />
+
                 <div class="row g-3">
                   <div class="col-sm-6">
                     <label for="firstName" class="form-label">First name</label>
-                    <input name="FirstName" type="text" class="form-control" id="firstName" value="@Model.Friend.FirstName">
+                    <input name="FirstName" type="text" class="form-control" id="firstName" value="@Model.Friend.FirstName" required>
+                    <div class="valid-feedback">
+                    Looks good!
+                  </div>
                   </div>
       
                   <div class="col-sm-6">
                     <label for="lastName" class="form-label">Last name</label>
-                    <input name="LastName" type="text" class="form-control" id="lastName" value="@Model.Friend.LastName">
+                    <input name="LastName" type="text" class="form-control" id="lastName" value="@Model.Friend.LastName" required>
+                    <div class="valid-feedback">
+                    Looks good!
+                  </div>
                   </div>
                
                   <div class="col-sm-6">
                     <label for="birthday" class="form-label">Birthday</label>
                     <input name="Birthday" type="birthday" class="form-control" id="birthday" value="@Model.Friend.Birthday">
+                    <div class="valid-feedback">
+                    Looks good!
+                  </div>
                   </div>
 
                   <div class="row g-3 visible">
                     <div class="col-12">
                       <label for="address" class="form-label">Address</label>
                       <input name="Address" type="text" class="form-control" id="address" value="@Model.Friend.Address.StreetAddress">
+                      <div class="valid-feedback">
+                      Looks good!
+                    </div>
                     </div>
         
                     <div class="col-md-3">
                       <label for="zip" class="form-label">Zip</label>
                       <input name="ZipCode" type="text" class="form-control" id="zip" value="@Model.Friend.Address.ZipCode">
+                      <div class="valid-feedback">
+                      Looks good!
+                    </div>
                     </div>
 
                     <div class="col-md-4">
                       <label for="city" class="form-label">City</label>
                       <input name="City" type="text" class="form-control" id="city" value="@Model.Friend.Address.City">
+                      <div class="valid-feedback">
+                      Looks good!
+                    </div>
                     </div>
         
                     <div class="col-md-5">
                       <label for="country" class="form-label">Country</label>
-                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Friend.Address.Country">
+                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Friend.Address.Country" required>
                   </div>
                 </div>
                 </div>
@@ -53,3 +72,27 @@
               <button class="w-100 btn btn-primary btn-lg my-4" type="submit">Save changes</button>
               </form>            
             </div>
+
+<script>
+    
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })();
+
+</script>
