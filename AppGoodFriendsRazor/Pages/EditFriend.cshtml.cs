@@ -18,23 +18,10 @@ namespace MyApp.Namespace
 
         public DateTime? Birthday { get; set; } = null;
 
-        
-
-
         //BIND friend with address
         public AddressIM addressIM { get; set; }
 
         public FriendIM(FriendIM friend)
-        {
-            FriendId = friend.FriendId;
-            FirstName = friend.FirstName;
-            LastName = friend.LastName;
-            Birthday = friend.Birthday;
-            
-            
-        }
-
-        public FriendIM(FriendCUdto friend)
         {
             FriendId = friend.FriendId;
             FirstName = friend.FirstName;
@@ -70,17 +57,6 @@ namespace MyApp.Namespace
             ZipCode = address.ZipCode;
             City = address.City;
             Country = address.Country;
-            
-        }
-
-        public AddressIM(AddressCUdto address)
-        {
-            AddressId = address.AddressId;
-            StreetAddress = address.StreetAddress;
-            ZipCode = address.ZipCode;
-            City = address.City;
-            Country = address.Country;
-            
             
         }
 
