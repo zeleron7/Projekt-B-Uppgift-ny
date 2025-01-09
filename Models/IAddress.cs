@@ -12,6 +12,7 @@ public interface IAddress
     public string Country { get; set; }
 
     public List<IFriend> Friends { get; set; }
+
 }
 
 

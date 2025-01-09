@@ -16,6 +16,7 @@
                   <div class="col-sm-6">
                     <label for="firstName" class="form-label">First name</label>
                     <input name="FirstName" type="text" class="form-control" id="firstName" value="@Model.Friend.FirstName" required>
+                     <span asp-validation-for="Friend.FirstName" class="text-danger"></span>
                     <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -24,6 +25,7 @@
                   <div class="col-sm-6">
                     <label for="lastName" class="form-label">Last name</label>
                     <input name="LastName" type="text" class="form-control" id="lastName" value="@Model.Friend.LastName" required>
+                     <span asp-validation-for="Friend.LastName" class="text-danger"></span>
                     <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -40,7 +42,7 @@
                   <div class="row g-3 visible">
                     <div class="col-12">
                       <label for="address" class="form-label">Address</label>
-                      <input name="Address" type="text" class="form-control" id="address" value="@Model.Friend.Address.StreetAddress">
+                      <input name="Address" type="text" class="form-control" id="address" value="@Model.Address.StreetAddress">
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -48,7 +50,7 @@
         
                     <div class="col-md-3">
                       <label for="zip" class="form-label">Zip</label>
-                      <input name="ZipCode" type="text" class="form-control" id="zip" value="@Model.Friend.Address.ZipCode">
+                      <input name="ZipCode" type="text" class="form-control" id="zip" value="@Model.Address.ZipCode">
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -56,7 +58,7 @@
 
                     <div class="col-md-4">
                       <label for="city" class="form-label">City</label>
-                      <input name="City" type="text" class="form-control" id="city" value="@Model.Friend.Address.City">
+                      <input name="City" type="text" class="form-control" id="city" value="@Model.Address.City">
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -64,7 +66,7 @@
         
                     <div class="col-md-5">
                       <label for="country" class="form-label">Country</label>
-                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Friend.Address.Country" required>
+                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Address.Country" required>
                   </div>
                 </div>
                 </div>
