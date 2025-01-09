@@ -16,7 +16,6 @@
                   <div class="col-sm-6">
                     <label for="firstName" class="form-label">First name</label>
                     <input name="FirstName" type="text" class="form-control" id="firstName" value="@Model.Friend.FirstName" required>
-                     <span asp-validation-for="Friend.FirstName" class="text-danger"></span>
                     <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -25,7 +24,6 @@
                   <div class="col-sm-6">
                     <label for="lastName" class="form-label">Last name</label>
                     <input name="LastName" type="text" class="form-control" id="lastName" value="@Model.Friend.LastName" required>
-                     <span asp-validation-for="Friend.LastName" class="text-danger"></span>
                     <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -33,7 +31,7 @@
                
                   <div class="col-sm-6">
                     <label for="birthday" class="form-label">Birthday</label>
-                    <input name="Birthday" type="birthday" class="form-control" id="birthday" value="@Model.Friend.Birthday">
+                    <input name="Birthday" type="birthday" class="form-control" id="birthday" value="@Model.Friend.Birthday" required>
                     <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -42,7 +40,7 @@
                   <div class="row g-3 visible">
                     <div class="col-12">
                       <label for="address" class="form-label">Address</label>
-                      <input name="Address" type="text" class="form-control" id="address" value="@Model.Address.StreetAddress">
+                      <input name="Address" type="text" class="form-control" id="address" value="@Model.Friend.addressIM.StreetAddress" required>
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -50,7 +48,7 @@
         
                     <div class="col-md-3">
                       <label for="zip" class="form-label">Zip</label>
-                      <input name="ZipCode" type="text" class="form-control" id="zip" value="@Model.Address.ZipCode">
+                      <input name="ZipCode" type="text" class="form-control" id="zip" value="@Model.Friend.addressIM.ZipCode" required>
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -58,7 +56,7 @@
 
                     <div class="col-md-4">
                       <label for="city" class="form-label">City</label>
-                      <input name="City" type="text" class="form-control" id="city" value="@Model.Address.City">
+                      <input name="City" type="text" class="form-control" id="city" value="@Model.Friend.addressIM.City" required>
                       <div class="valid-feedback">
                       Looks good!
                     </div>
@@ -66,7 +64,7 @@
         
                     <div class="col-md-5">
                       <label for="country" class="form-label">Country</label>
-                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Address.Country" required>
+                      <input name="Country" type="text" class="form-control" id="country" value="@Model.Friend.addressIM.Country" required>
                   </div>
                 </div>
                 </div>
@@ -77,14 +75,11 @@
 
 <script>
     
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
     'use strict'
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
 
-    // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
         if (!form.checkValidity()) {

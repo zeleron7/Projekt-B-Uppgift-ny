@@ -15,12 +15,8 @@ public class FriendCUdto
 {
     public virtual Guid? FriendId { get; set; }
 
-    [Required(ErrorMessage = "First name is required")]
-    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name can only contain letters")]
     public virtual string FirstName { get; set; }
 
-    //[Required(ErrorMessage = "Last name is required")]
-    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name can only contain letters")]
     public virtual string LastName { get; set; }
 
     public virtual string Email { get; set; }
@@ -32,8 +28,6 @@ public class FriendCUdto
     public virtual List<Guid> PetsId { get; set; } = null;
 
     public virtual List<Guid> QuotesId { get; set; } = null;
-
-    public AddressCUdto Address { get; set; } 
 
     public FriendCUdto() { }
     public FriendCUdto(IFriend org)
