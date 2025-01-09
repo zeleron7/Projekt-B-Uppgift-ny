@@ -19,7 +19,7 @@ public class FriendCUdto
     [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name can only contain letters")]
     public virtual string FirstName { get; set; }
 
-    [Required(ErrorMessage = "Last name is required")]
+    //[Required(ErrorMessage = "Last name is required")]
     [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name can only contain letters")]
     public virtual string LastName { get; set; }
 
