@@ -28,7 +28,6 @@ namespace MyApp.Namespace
         public int NextPageNr { get; set; } = 0;
         public int NrVisiblePages { get; set; } = 0;
 
-        //ModelBinding for the form
         [BindProperty] 
         public string SearchFilter { get; set; } = null;
 
@@ -36,9 +35,7 @@ namespace MyApp.Namespace
         public async Task <IActionResult> OnGet(string city)
         {
             SelectedCity = city;
-            //ThisPageNr = pagenr;
-
-            //Read a QueryParameters
+            
             if (int.TryParse(Request.Query["pagenr"], out int pagenr))
             {
                 ThisPageNr = pagenr;

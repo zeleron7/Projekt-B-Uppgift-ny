@@ -13,13 +13,9 @@ namespace MyApp.Namespace
         
     public class Countries : PageModel
     {
-
         readonly IFriendsService _service;
 
-        //countries
         public List<CountryInfo> countries {get; set;} = new List<CountryInfo>();
-
-        //public List<string> countries {get; set;} = new List<string>();
 
         public async Task <IActionResult> OnGet()
         {
@@ -35,7 +31,6 @@ namespace MyApp.Namespace
                 Country = g.Key,
                 NrFriends = g.Sum(f => f.NrFriends),
                 City = g.Select(a => a.City).Distinct().Count().ToString()
-                //City = g.Where(a => a.City != null).Count().ToString()
             })
             .Where(a => a.Country != null && a.City != null)
             .ToList();

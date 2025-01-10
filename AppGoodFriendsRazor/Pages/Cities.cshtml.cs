@@ -13,42 +13,18 @@ namespace MyApp.Namespace
         public int NrPets { get; set; }
     }
 
-
     public class Cities : PageModel
     {
         readonly IFriendsService _service;
        
-        public string City { get; set; }
-        public int NrFriends { get; set; }
-        public int NrPets { get; set; }
         public List<CitiesInfo> CitiesInfo { get; set; } = new List<CitiesInfo>();
 
-
-        //public List<dynamic> CityInfos { get; set; } = new List<dynamic>();
         public string SelectedCountry { get; set; }
 
         public async Task <IActionResult> OnGet(string country)
         {
 
-        SelectedCountry = country;
-
-            /*var dbInfo = await _service.InfoAsync;
-
             SelectedCountry = country;
-
-             CityInfos = (from friend in dbInfo.Friends
-                         join pet in dbInfo.Pets on friend.City equals pet.City into petGroup
-                         from pet in petGroup.DefaultIfEmpty()
-                         where friend.Country == country
-                         group new { friend, pet } by friend.City into cityGroup
-                         select new
-                         {
-                             City = cityGroup.Key,
-                             NrFriends = cityGroup.Sum(x => x.friend.NrFriends),
-                             NrPets = cityGroup.Sum(x => x.pet?.NrPets ?? 0),
-                         })
-                         .Where(a => a.City != null)
-                         .ToList<dynamic>();*/
 
             var dbInfo = await _service.InfoAsync;
 
