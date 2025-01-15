@@ -152,7 +152,6 @@ namespace MyApp.Namespace
                         }
                     }
                 }
-                
             }
             catch (Exception ex)
             {
