@@ -5,7 +5,7 @@ using Models;
 using Models.DTO;
 using Services;
 
-namespace MyApp.Namespace
+namespace AppGoodFriendsRazor.Pages
 {
     
     public class FriendDetails : PageModel

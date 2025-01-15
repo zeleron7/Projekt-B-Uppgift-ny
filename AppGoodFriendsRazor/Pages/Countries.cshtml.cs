@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.DTO;
 using Services;
 
-namespace MyApp.Namespace
+namespace AppGoodFriendsRazor.Pages
 {
     public class CountryInfo {
         public string Country { get; set; }
