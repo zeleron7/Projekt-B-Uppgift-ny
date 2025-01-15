@@ -25,6 +25,8 @@ namespace MyApp.Namespace
         public DateTime? Birthday { get; set; } = null;
 
         //BIND friend with address
+
+        [BindProperty]
         public AddressIM addressIM { get; set; }
 
         public FriendIM() { }
@@ -48,6 +50,17 @@ namespace MyApp.Namespace
             addressIM = new AddressIM(friend.Address);
         }
 
+        public IFriend UpdateModel(IFriend model)
+        {
+            
+            model.FirstName = FirstName;
+            model.LastName = LastName;
+            model.Email = Email;
+            model.Birthday = this?.Birthday;
+            model.Address.AddressId = addressIM.AddressId;
+            
+            return model;
+        }
     }
     public class AddressIM 
     {
@@ -76,6 +89,7 @@ namespace MyApp.Namespace
             City = address.City;
             Country = address.Country;
         }
+
     }
 
     public class EditFriendModel : PageModel
@@ -103,8 +117,6 @@ namespace MyApp.Namespace
         public async Task<IActionResult> OnPostEdit() 
         {
 
-            IFriend Model = await _service.ReadFriendAsync(Friend.FriendId, false);
-            
             try
             {
                 if (!ModelState.IsValid)
@@ -149,50 +161,6 @@ namespace MyApp.Namespace
         
             return await OnGet(Friend.FriendId);
 
-
-            /*try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return await OnGet(friendId);
-                }
-                else
-                {
-                    if (friendId != Guid.Parse("00000000-0000-0000-0000-000000000000")) 
-                    {
-                    
-                        var friend = await _service.ReadFriendAsync(friendId, false);
-
-                        if (friend != null) 
-                        {
-                            var friendCUdto = new FriendCUdto(friend);
-
-                            var address = await _service.ReadAddressAsync((Guid)friendCUdto.AddressId, false);
-
-                            friendCUdto.FirstName = FirstName;
-                            friendCUdto.LastName = LastName;
-                            friendCUdto.Birthday = Birthday;
-
-                            var addressCUdto = new AddressCUdto(address);
-
-                            addressCUdto.StreetAddress = Address;
-                            addressCUdto.City = City;
-                            addressCUdto.Country = Country;
-                            addressCUdto.ZipCode = ZipCode;
-
-                            await _service.UpdateFriendAsync(friendCUdto);
-                            await _service.UpdateAddressAsync(addressCUdto);
-                        }
-                    }
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        
-            return await OnGet(friendId);*/
         }
 
         public EditFriendModel (IFriendsService service)
