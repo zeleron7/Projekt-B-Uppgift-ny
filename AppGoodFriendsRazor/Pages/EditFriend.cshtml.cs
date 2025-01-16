@@ -111,12 +111,10 @@ namespace AppGoodFriendsRazor.Pages
             }
             
             return Page();
-
         }
 
         public async Task<IActionResult> OnPostEdit() 
         {
-
             try
             {
                 if (!ModelState.IsValid)
@@ -159,7 +157,6 @@ namespace AppGoodFriendsRazor.Pages
             }
         
             return await OnGet(Friend.FriendId);
-
         }
 
         public EditFriendModel (IFriendsService service)

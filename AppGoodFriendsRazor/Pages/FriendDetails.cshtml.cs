@@ -12,7 +12,7 @@ namespace AppGoodFriendsRazor.Pages
     {
         readonly IFriendsService _service;
 
-        //friend
+        //Friend
         public IFriend Friend { get; set; }
 
         public async Task <IActionResult> OnGet(Guid friendId)
@@ -28,7 +28,7 @@ namespace AppGoodFriendsRazor.Pages
             {
             if(await _service.ReadPetAsync(deleteId, false) != null)
             {
-                    await _service.DeletePetAsync(deleteId);
+                await _service.DeletePetAsync(deleteId);
             } 
             }
 
